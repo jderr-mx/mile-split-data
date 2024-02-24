@@ -1,4 +1,4 @@
-import Model, { attr } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class AthleteModel extends Model {
   @attr firstName;
@@ -8,4 +8,6 @@ export default class AthleteModel extends Model {
   @attr country;
   @attr schoolName;
   @attr collegeName;
+  @attr gender;
+  @belongsTo('team', { async: true, inverse: null }) team;
 }

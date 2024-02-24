@@ -5,21 +5,24 @@ import { service } from '@ember/service';
 
 export default class SearchSelectorComponent extends Component {
   @service searchService;
-  @tracked selected = null;
-  @tracked searchTerm = 'Search Text';
+  @tracked selected = 'Athlete';
+  @tracked searchTerm = '';
+  @tracked results = [];
 
   @action
   selectSearchType(type) {
     this.selected = type;
+    this.results = [];
+    this.searchTerm = '';
   }
 
   @action
   async doSearch() {
-    const results = await this.searchService.doSearch(
+    const { data } = await this.searchService.doSearch(
       this.searchTerm,
       this.selected,
     );
-    console.log(results);
+    this.results = this.formatData(data);
   }
 
   @action
@@ -28,15 +31,26 @@ export default class SearchSelectorComponent extends Component {
   }
 
   get athleteSelected() {
-    if (this.selected == 'Athlete') return 'bg-indigo-300';
+    if (this.selected == 'Athlete') return 'bg-indigo-500 text-indigo-50';
     return '';
   }
   get teamSelected() {
-    if (this.selected == 'Team') return 'bg-indigo-300';
+    if (this.selected == 'Team') return 'bg-indigo-500 text-indigo-50';
     return '';
   }
-  get meetSelected() {
-    if (this.selected == 'Meet') return 'bg-indigo-300';
-    return '';
+
+  formatData(data) {
+    switch (this.selected) {
+      case 'Athlete':
+        return data.map((item) => ({
+          text: `${item.firstName} ${item.lastName}, ${item.city} ${item.state}`,
+          id: item.id,
+        }));
+      case 'Team':
+        return data.map((item) => ({
+          text: `${item.name}, ${item.city} ${item.state}`,
+          id: item.id,
+        }));
+    }
   }
 }

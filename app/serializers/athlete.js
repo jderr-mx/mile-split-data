@@ -1,24 +1,35 @@
 import ApplicationSerializer from './application';
 
 export default class AthleteSerializer extends ApplicationSerializer {
-  normalizeResponse(store, primaryModelClass, payload, id, requestType) {
+  normalizeFindRecordResponse(
+    store,
+    primaryModelClass,
+    payload,
+    id,
+    requestType,
+  ) {
     const { data } = payload;
-    payload.data = data.map(function (item) {
-      const attributes = {};
-      attributes['first-name'] = item.firstName;
-      attributes['last-name'] = item.lastName;
-      attributes['city'] = item.city;
-      attributes['state'] = item.state;
-      attributes['country'] = item.country;
-      attributes['school-name'] = item.schoolName;
-      attributes['college-name'] = item.collegeName;
-      return {
-        id: item.id,
-        type: primaryModelClass.modelName,
-        attributes,
-      };
-    });
-    return super.normalizeResponse(
+    const attributes = {};
+    attributes['first-name'] = data.firstName;
+    attributes['last-name'] = data.lastName;
+    attributes['city'] = data.city;
+    attributes['state'] = data.state;
+    attributes['country'] = data.country;
+    attributes['school-name'] = data.schoolName;
+    attributes['college-name'] = data.collegeName;
+    attributes['gender'] = data.gender;
+    attributes['team-id'] = data.teamId;
+    payload.data = {
+      id: data.id,
+      type: primaryModelClass.modelName,
+      attributes,
+      relationships: {
+        team: {
+          data: { id: data.teamId, type: 'team' },
+        },
+      },
+    };
+    return super.normalizeSingleResponse(
       store,
       primaryModelClass,
       payload,
