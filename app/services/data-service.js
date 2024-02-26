@@ -1,8 +1,10 @@
 import Service from '@ember/service';
+import { w } from '@ember/string';
 
-export default class SearchService extends Service {
+export default class DataService extends Service {
   namespace = 'api/v1';
   host = 'https://www.milesplit.com';
+  eventMap = {};
 
   searchTypesArray = ['athletes', 'teams'];
 
@@ -27,5 +29,16 @@ export default class SearchService extends Service {
       case 'Team':
         return await this.searchTeams(query);
     }
+  }
+
+  get events() {
+    return this.eventMap;
+  }
+
+  set events(events) {
+    this.eventMap = events.reduce(function (acc, item) {
+      acc[item.code] = item.name;
+      return acc;
+    }, {});
   }
 }

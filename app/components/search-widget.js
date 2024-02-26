@@ -3,8 +3,8 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 
-export default class SearchSelectorComponent extends Component {
-  @service searchService;
+export default class SearchWidgetComponent extends Component {
+  @service dataService;
   @tracked selected = 'Athlete';
   @tracked searchTerm = '';
   @tracked results = [];
@@ -18,7 +18,7 @@ export default class SearchSelectorComponent extends Component {
 
   @action
   async doSearch() {
-    const { data } = await this.searchService.doSearch(
+    const { data } = await this.dataService.doSearch(
       this.searchTerm,
       this.selected,
     );

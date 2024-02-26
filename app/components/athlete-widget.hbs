@@ -1,0 +1,32 @@
+<div class="flex justify-center flex-col">
+  <div class="flex">
+    <div>
+      <span
+        class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-gray-500"
+      >
+        <span
+          class="text-xl font-medium leading-none text-white"
+        >{{@athlete.initials}}</span>
+      </span>
+    </div>
+    <div class="px-4 flex flex-col">
+      <span class="text-xl mb-2">{{@athlete.name}}</span>
+      {{#if @athlete.gradYear}}
+        <span class="text-xs">Class of {{@athlete.gradYear}}</span>
+      {{/if}}
+      <span class="text-xs">{{@athlete.city}}, {{@athlete.state}}</span>
+    </div>
+  </div>
+  <div class="mt-8">
+    <table>
+      <tbody>
+        {{#each this.athleteEvents as |event|}}
+          <tr>
+          <td class="px-2">{{event.name}}</td>
+          <td class="px-2">{{event.topResult.mark}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -8,24 +8,27 @@ export default class AthleteSerializer extends ApplicationSerializer {
     id,
     requestType,
   ) {
-    const { data } = payload;
+    const { data: stats } = payload;
+    const athlete = payload['_embedded']['athlete'];
     const attributes = {};
-    attributes['first-name'] = data.firstName;
-    attributes['last-name'] = data.lastName;
-    attributes['city'] = data.city;
-    attributes['state'] = data.state;
-    attributes['country'] = data.country;
-    attributes['school-name'] = data.schoolName;
-    attributes['college-name'] = data.collegeName;
-    attributes['gender'] = data.gender;
-    attributes['team-id'] = data.teamId;
+    attributes['first-name'] = athlete.firstName;
+    attributes['last-name'] = athlete.lastName;
+    attributes['city'] = athlete.city;
+    attributes['state'] = athlete.state;
+    attributes['country'] = athlete.country;
+    attributes['school-name'] = athlete.schoolName;
+    attributes['college-name'] = athlete.collegeName;
+    attributes['gender'] = athlete.gender;
+    attributes['team-id'] = athlete.teamId;
+    attributes['grad-year'] = athlete.gradYear;
+    attributes['stats'] = stats;
     payload.data = {
-      id: data.id,
+      id: athlete.id,
       type: primaryModelClass.modelName,
       attributes,
       relationships: {
         team: {
-          data: { id: data.teamId, type: 'team' },
+          data: { id: athlete.teamId, type: 'team' },
         },
       },
     };
