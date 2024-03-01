@@ -37,7 +37,8 @@ export default class DataService extends Service {
 
   set events(events) {
     this.eventMap = events.reduce(function (acc, item) {
-      acc[item.code] = item.name;
+      const itemCode = item.code.toUpperCase();
+      acc[itemCode] = item.name;
       return acc;
     }, {});
   }

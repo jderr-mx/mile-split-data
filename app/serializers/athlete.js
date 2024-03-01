@@ -21,7 +21,10 @@ export default class AthleteSerializer extends ApplicationSerializer {
     attributes['gender'] = athlete.gender;
     attributes['team-id'] = athlete.teamId;
     attributes['grad-year'] = athlete.gradYear;
-    attributes['stats'] = stats;
+    attributes['stats'] = stats.map(function (stat) {
+      stat.eventCode = stat.eventCode.toUpperCase();
+      return stat;
+    });
     payload.data = {
       id: athlete.id,
       type: primaryModelClass.modelName,

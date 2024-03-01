@@ -16,7 +16,6 @@ export default class AthleteWidgetComponent extends Component {
     const eventResults = athleteStats.filter(
       (result) => result.eventCode == eventCode,
     );
-    console.log(eventResults);
     const unitValues = eventResults.map((item) => item.units);
     const maxUnitValue = Math.max(...unitValues);
     return eventResults.find((result) => result.units == maxUnitValue);

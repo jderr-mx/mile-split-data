@@ -17,7 +17,8 @@ export default class SearchWidgetComponent extends Component {
   }
 
   @action
-  async doSearch() {
+  async doSearch(event) {
+    event.preventDefault();
     const { data } = await this.dataService.doSearch(
       this.searchTerm,
       this.selected,

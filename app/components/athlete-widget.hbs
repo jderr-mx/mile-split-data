@@ -1,6 +1,6 @@
-<div class="flex justify-center flex-col">
-  <div class="flex">
-    <div>
+<div class="flex flex-col w-full">
+  <div class="flex mb-8 justify-evenly sm:justify-center">
+    <div class="px-4">
       <span
         class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-gray-500"
       >
@@ -9,7 +9,7 @@
         >{{@athlete.initials}}</span>
       </span>
     </div>
-    <div class="px-4 flex flex-col">
+    <div class="px-4 flex flex-col justify-center">
       <span class="text-xl mb-2">{{@athlete.name}}</span>
       {{#if @athlete.gradYear}}
         <span class="text-xs">Class of {{@athlete.gradYear}}</span>
@@ -17,16 +17,22 @@
       <span class="text-xs">{{@athlete.city}}, {{@athlete.state}}</span>
     </div>
   </div>
-  <div class="mt-8">
-    <table>
-      <tbody>
-        {{#each this.athleteEvents as |event|}}
-          <tr>
-          <td class="px-2">{{event.name}}</td>
-          <td class="px-2">{{event.topResult.mark}}</td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
+  <div class="flex justify-center">
+    <div class="border w-3/4 sm:w-1/2 rounded-lg">
+      <table class="w-full">
+        <tbody>
+          {{#each this.athleteEvents as |event|}}
+            <tr class="border-b last-of-type:border-0 hover:bg-gray-50">
+              <td class="px-2 text-sm text-gray-700 p-2">
+                <LinkTo @route="event" @models={{array @athlete.id event.code}}>{{event.name}}</LinkTo>
+              </td>
+              <td
+                class="px-2 text-sm text-gray-700 p-2"
+              >{{event.topResult.mark}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
