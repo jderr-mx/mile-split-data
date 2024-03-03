@@ -1,6 +1,6 @@
-<div>
+<div class="p-4">
   <h2 class="mb-8">{{@model.event.name}} progression for {{@model.athlete.name}}</h2>
-  <div>
+  <div class="hidden">
     {{#each @model.stats as |stat|}}
       <div class="mb-4">
         <span class="block">{{stat.mark}}</span>
@@ -8,4 +8,5 @@
       </div>
     {{/each}}
   </div>
+  <EventProgression @eventData={{@model.stats}} @eventCode = {{@model.code}} />
 </div>

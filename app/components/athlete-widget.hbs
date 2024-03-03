@@ -17,19 +17,26 @@
       <span class="text-xs">{{@athlete.city}}, {{@athlete.state}}</span>
     </div>
   </div>
-  <div class="flex justify-center">
-    <div class="border w-3/4 sm:w-1/2 rounded-lg">
+  <div class="flex justify-center p-4">
+    <div class="border w-full sm:w-1/2 rounded-lg">
       {{#each this.athleteEvents as |event|}}
-        <div
-          class="text-gray-700 border-b p-4 flex justify-between items-center last-of-type:border-0 hover:bg-gray-50"
+        <LinkTo
+          @route="event"
+          @models={{array @athlete.id event.code}}
         >
-          <div class="text-md basis-1/2">{{event.name}}
-            <div class="text-xs text-gray-500">{{event.topResult.meetName}}</div>
+          <div
+            class="text-gray-700 border-b p-4 flex justify-between items-center last-of-type:border-0 hover:bg-gray-50"
+          >
+            <div class="text-md basis-1/2">{{event.name}}
+              <div
+                class="text-xs text-gray-500"
+              >{{event.topResult.meetName}}</div>
+            </div>
+            <div class="text-md text-gray-700 basis-1/2 text-right">
+              {{event.topResult.mark}}
+            </div>
           </div>
-          <div class="text-md text-gray-700 basis-1/2 text-right">
-            {{event.topResult.mark}}
-          </div>
-        </div>
+        </LinkTo>
       {{/each}}
     </div>
   </div>
