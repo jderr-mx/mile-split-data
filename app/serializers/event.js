@@ -5,9 +5,9 @@ export default class TeamSerializer extends ApplicationSerializer {
     const { data } = payload;
     payload.data = data.map(function (item) {
       const attributes = {};
-      attributes['code'] = item.code;
+      attributes['code'] = item.code.toUpperCase();
       attributes['name'] = item.name;
-      attributes['short-name'] = item.shortName;
+      attributes['short-name'] = item.shortName.toUpperCase();
       return {
         id: item.id,
         type: primaryModelClass.modelName,

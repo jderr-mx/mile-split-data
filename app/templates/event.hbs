@@ -1,1 +1,11 @@
-<h2>This is the event route</h2>
+<div>
+  <h2 class="mb-8">{{@model.event.name}} progression for {{@model.athlete.name}}</h2>
+  <div>
+    {{#each @model.stats as |stat|}}
+      <div class="mb-4">
+        <span class="block">{{stat.mark}}</span>
+        <span class="block text-xs">{{stat.meetName}}</span>
+      </div>
+    {{/each}}
+  </div>
+</div>

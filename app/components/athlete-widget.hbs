@@ -1,5 +1,5 @@
 <div class="flex flex-col w-full">
-  <div class="flex mb-8 justify-evenly sm:justify-center">
+  <div class="flex mb-8 justify-center">
     <div class="px-4">
       <span
         class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-gray-500"
@@ -19,20 +19,18 @@
   </div>
   <div class="flex justify-center">
     <div class="border w-3/4 sm:w-1/2 rounded-lg">
-      <table class="w-full">
-        <tbody>
-          {{#each this.athleteEvents as |event|}}
-            <tr class="border-b last-of-type:border-0 hover:bg-gray-50">
-              <td class="px-2 text-sm text-gray-700 p-2">
-                <LinkTo @route="event" @models={{array @athlete.id event.code}}>{{event.name}}</LinkTo>
-              </td>
-              <td
-                class="px-2 text-sm text-gray-700 p-2"
-              >{{event.topResult.mark}}</td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
+      {{#each this.athleteEvents as |event|}}
+        <div
+          class="text-gray-700 border-b p-4 flex justify-between items-center last-of-type:border-0 hover:bg-gray-50"
+        >
+          <div class="text-md basis-1/2">{{event.name}}
+            <div class="text-xs text-gray-500">{{event.topResult.meetName}}</div>
+          </div>
+          <div class="text-md text-gray-700 basis-1/2 text-right">
+            {{event.topResult.mark}}
+          </div>
+        </div>
+      {{/each}}
     </div>
   </div>
 </div>
