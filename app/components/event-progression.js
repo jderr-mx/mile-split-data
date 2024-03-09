@@ -6,10 +6,10 @@ export default class EventProgressionComponent extends Component {
   get plot() {
     const conversionFunction = this.getUnitConversionFunction();
     return Plot.plot({
-      marginLeft: 100,
+      marginLeft: 60,
       marks: [
         Plot.lineY(this.unitValues, {
-          curve: 'natural',
+          curve: 'catmull-rom',
           marker: 'circle',
           x: Plot.indexOf,
         }),
@@ -47,8 +47,9 @@ export default class EventProgressionComponent extends Component {
   }
 
   get domain() {
-    const min = Math.min(...this.unitValues); //- 24000;
-    const max = Math.max(...this.unitValues); //+ 24000;
+    const domainMod = this.isTimedEvent ? 100 : 24000;
+    const min = Math.min(...this.unitValues) - domainMod;
+    const max = Math.max(...this.unitValues) + domainMod;
     return [Math.floor(min / 100) * 100, Math.ceil(max / 100) * 100];
   }
 
@@ -74,10 +75,12 @@ export default class EventProgressionComponent extends Component {
 
   unitsToTime(units) {
     const date = new Date(units);
-    const min = date.getMinutes();
-    const sec = date.getSeconds().toString().padStart(2, '0');
+    const min = date.getMinutes() ? `${date.getMinutes()}:` : '';
+    const sec = min
+      ? date.getSeconds().toString().padStart(2, '0')
+      : date.getSeconds();
     const ms = (date.getMilliseconds() / 10).toString().padStart(2, '0');
-    return `${min}:${sec}.${ms}`;
+    return `${min}${sec}.${ms}`;
   }
 
   getUnitConversionFunction() {

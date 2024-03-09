@@ -1,1 +1,12 @@
-<div>{{this.plot}}</div>
+<div class="mb-4 flex flex-col">
+  <div class="flex justify-between mb-4 p-4">
+    <LinkTo @model={{@athlete.id}} @route="athlete.summary">
+      {{svg-jar "arrow-left" class="h-6 text-gray-600"}}
+    </LinkTo>
+    <h2 class="text-center text-gray-600 text-bold font-xl">Progression</h2>
+    <div></div>
+  </div>
+  <div class="rounded-lg border shadow-lg overflow-auto">
+    <div>{{this.plot}}</div>
+  </div>
+</div>

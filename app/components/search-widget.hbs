@@ -39,7 +39,7 @@
                 class="text-xs p-2 border-b hover:bg-gray-200 last-of-type:border-0"
                 role="menuitem"
               >
-                <LinkTo @route="athlete" @model={{item.id}}>{{item.text}}</LinkTo>
+                <LinkTo @route="athlete.summary" @model={{item.id}}>{{item.text}}</LinkTo>
               </li>
             {{/each}}
           </ul>

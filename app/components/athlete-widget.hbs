@@ -1,43 +1,16 @@
-<div class="flex flex-col w-full">
-  <div class="flex mb-8 justify-center">
-    <div class="px-4">
-      <span
-        class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-gray-500"
+<div class="border w-full sm:w-1/2 rounded-lg shadow-lg">
+  {{#each this.athleteEvents as |event|}}
+    <LinkTo @route="athlete.event" @model={{event.code}}>
+      <div
+        class="text-gray-700 border-b p-4 flex justify-between items-center last-of-type:border-0 hover:bg-gray-50"
       >
-        <span
-          class="text-xl font-medium leading-none text-white"
-        >{{@athlete.initials}}</span>
-      </span>
-    </div>
-    <div class="px-4 flex flex-col justify-center">
-      <span class="text-xl mb-2">{{@athlete.name}}</span>
-      {{#if @athlete.gradYear}}
-        <span class="text-xs">Class of {{@athlete.gradYear}}</span>
-      {{/if}}
-      <span class="text-xs">{{@athlete.city}}, {{@athlete.state}}</span>
-    </div>
-  </div>
-  <div class="flex justify-center p-4">
-    <div class="border w-full sm:w-1/2 rounded-lg">
-      {{#each this.athleteEvents as |event|}}
-        <LinkTo
-          @route="event"
-          @models={{array @athlete.id event.code}}
-        >
-          <div
-            class="text-gray-700 border-b p-4 flex justify-between items-center last-of-type:border-0 hover:bg-gray-50"
-          >
-            <div class="text-md basis-1/2">{{event.name}}
-              <div
-                class="text-xs text-gray-500"
-              >{{event.topResult.meetName}}</div>
-            </div>
-            <div class="text-md text-gray-700 basis-1/2 text-right">
-              {{event.topResult.mark}}
-            </div>
-          </div>
-        </LinkTo>
-      {{/each}}
-    </div>
-  </div>
+        <div class="text-md basis-1/2">{{event.name}}
+          <div class="text-xs text-gray-500">{{event.topResult.meetName}}</div>
+        </div>
+        <div class="text-md text-gray-700 basis-1/2 text-right">
+          {{event.topResult.mark}}
+        </div>
+      </div>
+    </LinkTo>
+  {{/each}}
 </div>

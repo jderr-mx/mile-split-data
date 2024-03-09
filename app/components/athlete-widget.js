@@ -17,7 +17,9 @@ export default class AthleteWidgetComponent extends Component {
       (result) => result.eventCode == eventCode,
     );
     const unitValues = eventResults.map((item) => item.units);
-    const maxUnitValue = Math.max(...unitValues);
-    return eventResults.find((result) => result.units == maxUnitValue);
+    const topUnitValue = this.dataService.isTimedEvent(eventCode)
+      ? Math.min(...unitValues)
+      : Math.max(...unitValues);
+    return eventResults.find((result) => result.units == topUnitValue);
   }
 }

@@ -1,0 +1,18 @@
+<div class="flex mb-8 justify-center">
+  <div class="px-4">
+    <span
+      class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-gray-500"
+    >
+      <span
+        class="text-xl font-medium leading-none text-white"
+      >{{@athlete.initials}}</span>
+    </span>
+  </div>
+  <div class="px-4 flex flex-col justify-center">
+    <span class="text-xl mb-2">{{@athlete.name}}</span>
+    {{#if @athlete.gradYear}}
+      <span class="text-xs">Class of {{@athlete.gradYear}}</span>
+    {{/if}}
+    <span class="text-xs">{{@athlete.city}}, {{@athlete.state}}</span>
+  </div>
+</div>

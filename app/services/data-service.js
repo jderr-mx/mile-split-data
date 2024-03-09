@@ -1,10 +1,10 @@
 import Service from '@ember/service';
-import { w } from '@ember/string';
 
 export default class DataService extends Service {
   namespace = 'api/v1';
   host = 'https://www.milesplit.com';
   eventMap = {};
+  MEASURED_EVENTS = ['D', 'HT', 'WT', 'S', 'J', 'LJ', 'HJ', 'PV'];
 
   searchTypesArray = ['athletes', 'teams'];
 
@@ -41,5 +41,9 @@ export default class DataService extends Service {
       acc[itemCode] = item.name;
       return acc;
     }, {});
+  }
+
+  isTimedEvent(eventCode) {
+    return !this.MEASURED_EVENTS.includes(eventCode);
   }
 }
