@@ -1,0 +1,19 @@
+<div class="border w-full rounded-lg shadow-lg overflow-auto">
+  {{#each this.athleteEvents as |event|}}
+    <div
+      {{on "click" (fn @setEventCode event.code)}}
+      class="text-gray-700 border-b p-4 flex justify-between items-center last-of-type:border-0 hover:bg-gray-100 active:bg-indigo-200
+        {{if
+          (eq @selectedEvent event.code)
+          'bg-indigo-200 hover:bg-indigo-200'
+        }}"
+    >
+      <div class="text-md">{{event.name}}
+        <div class="text-xs text-gray-500">{{event.topResult.meetName}}</div>
+      </div>
+      <div class="text-md text-gray-700 text-right">
+        {{event.topResult.mark}}
+      </div>
+    </div>
+  {{/each}}
+</div>

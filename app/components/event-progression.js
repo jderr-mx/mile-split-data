@@ -35,6 +35,7 @@ export default class EventProgressionComponent extends Component {
         domain: this.domain,
         tickFormat: (d) => conversionFunction(d),
         tickSize: 0,
+        grid: true,
         reverse: this.isTimedEvent,
       },
     });
@@ -47,7 +48,7 @@ export default class EventProgressionComponent extends Component {
   }
 
   get domain() {
-    const domainMod = this.isTimedEvent ? 100 : 24000;
+    const domainMod = this.isTimedEvent ? 100 : 1200;
     const min = Math.min(...this.unitValues) - domainMod;
     const max = Math.max(...this.unitValues) + domainMod;
     return [Math.floor(min / 100) * 100, Math.ceil(max / 100) * 100];
