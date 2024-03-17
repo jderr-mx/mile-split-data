@@ -1,6 +1,8 @@
 import Service from '@ember/service';
+import { service } from '@ember/service';
 
 export default class DataService extends Service {
+  @service store;
   namespace = 'api/v1';
   host = 'https://www.milesplit.com';
   eventMap = {};
