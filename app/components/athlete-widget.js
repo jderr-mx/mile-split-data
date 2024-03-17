@@ -26,7 +26,7 @@ export default class AthleteWidgetComponent extends Component {
       .filter((event) => event.eventCode == this.eventCode)
       .map((event) => {
         const meet = this.store.peekRecord('meet', event.meetId);
-        event['meet'] = meet;
+        event['date'] = meet.dateStart;
         return event;
       });
   }

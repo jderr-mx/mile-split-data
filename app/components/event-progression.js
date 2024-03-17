@@ -29,7 +29,7 @@ export default class EventProgressionComponent extends Component {
           strokeWidth: 1,
           dy: -12,
         }),
-        Plot.axisX([], { tickFormat: null }),
+        //Plot.axisX([], { tickFormat: null }),
       ],
       y: {
         domain: this.domain,

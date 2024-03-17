@@ -23,11 +23,11 @@
             <div
               class="flex justify-between items-center text-sm border-b p-4 last-of-type:border-0"
             >{{event.name}}
-              <div class="text-gray-500">
+              <div class="text-gray-500 text-xs">
                 <div class="font-bold">{{event.meetName}}</div>
-                <div class="text-xs font-mono">{{date-format event.meet.dateStart}}</div>
+                <div class="font-mono">{{date-format event.date}}</div>
               </div>
-              <div class="text-gray-700 text-right">
+              <div class="text-gray-700 text-right text-sm">
                 {{event.mark}}
               </div>
             </div>
