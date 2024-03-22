@@ -13,7 +13,7 @@ export default class EventProgressionComponent extends Component {
           marker: 'circle',
           x: Plot.indexOf,
         }),
-        Plot.tip(this.progressionData, { y: 'meetName', x: Plot.indexOf }),
+        // Plot.tip(this.progressionData, { y: 'meetName', x: Plot.indexOf }),
         Plot.circle(this.prArray, {
           x: Plot.indexOf,
           y: 'units',
@@ -29,7 +29,7 @@ export default class EventProgressionComponent extends Component {
           strokeWidth: 1,
           dy: -12,
         }),
-        //Plot.axisX([], { tickFormat: null }),
+        Plot.axisX([], { tickFormat: null }),
       ],
       y: {
         domain: this.domain,
@@ -37,6 +37,7 @@ export default class EventProgressionComponent extends Component {
         tickSize: 0,
         grid: true,
         reverse: this.isTimedEvent,
+        label: ''
       },
     });
   }

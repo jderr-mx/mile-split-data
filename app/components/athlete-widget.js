@@ -42,7 +42,7 @@ export default class AthleteWidgetComponent extends Component {
     this.meets = await all(meetTasks);
   });
 
-  getMeet = task({ maxConcurrency: 1, enqueue: true }, async (meetId) => {
+  getMeet = task({ maxConcurrency: 5, enqueue: true }, async (meetId) => {
     await timeout(200);
     return await this.store.findRecord('meet', meetId);
   });
