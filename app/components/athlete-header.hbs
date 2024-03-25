@@ -9,7 +9,10 @@
     </span>
   </div>
   <div class="px-4 flex flex-col justify-center">
-    <span class="text-xl mb-2">{{@athlete.name}}</span>
+    <div class="text-xl mb-2 flex items-center">
+      <span class="mr-2">{{@athlete.name}}</span>
+      <FavoriteButton @clickHandler={{(fn this.favoriteAthlete @athlete)}} @isFavorite={{this.isFavorite}} />
+    </div>
     {{#if @athlete.gradYear}}
       <span class="text-xs">Class of {{@athlete.gradYear}}</span>
     {{/if}}

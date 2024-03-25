@@ -24,7 +24,7 @@
               class="flex justify-between items-center text-sm border-b p-4 last-of-type:border-0"
             >{{event.name}}
               <div class="text-gray-500 text-xs">
-                <div class="font-bold">{{event.meetName}}</div>
+                <div class="font-bold"><a href="https://oh.milesplit.com/meets/{{event.meetId}}" target="_blank">{{event.meetName}}</a></div>
                 <div class="font-mono">{{date-format event.date}}</div>
               </div>
               <div class="text-gray-700 text-right text-sm">

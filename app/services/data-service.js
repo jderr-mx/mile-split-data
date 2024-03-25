@@ -8,6 +8,7 @@ export default class DataService extends Service {
   eventMap = {};
   MEASURED_EVENTS = ['D', 'HT', 'WT', 'S', 'J', 'LJ', 'HJ', 'PV'];
 
+  favorites = [];
   searchTypesArray = ['athletes', 'teams'];
 
   async searchAthletes(query) {
@@ -47,5 +48,25 @@ export default class DataService extends Service {
 
   isTimedEvent(eventCode) {
     return !this.MEASURED_EVENTS.includes(eventCode);
+  }
+
+  setFavorite(athlete) {
+    if (this.favoriteAthletes.includes(athlete.id)) {
+      this.favorites = this.favorites.filter((item) => item.id != athlete.id);
+    } else {
+      this.favorites.push({ id: athlete.id, name: athlete.name });
+    }
+    const serializedAthletes = this.favorites.map((athlete) => ({
+      id: athlete.id,
+      name: athlete.name,
+    }));
+    localStorage.setItem(
+      'favoriteAthletes',
+      JSON.stringify(serializedAthletes),
+    );
+  }
+
+  get favoriteAthletes() {
+    return this.favorites.map((item) => item.id);
   }
 }
