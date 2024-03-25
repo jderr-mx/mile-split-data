@@ -1,13 +1,14 @@
 {{#if this.hasFavoriteAthletes}}
-  <h2 class="my-4">Favorites</h2>
-  <ul>
-    {{#each this.favoriteAthletes as |athlete|}}
-      <li class="mb-2">
-        <LinkTo
-          @route="athlete.summary"
-          @model={{athlete.id}}
-        >{{athlete.name}}</LinkTo>
-      </li>
-    {{/each}}
-  </ul>
+  <div class="rounded-xl border shadow-xl mt-16">
+    <ul>
+      {{#each this.favoriteAthletes as |athlete|}}
+        <li class="p-4 border-b">
+          <LinkTo
+            @route="athlete.summary"
+            @model={{athlete.id}}
+          >{{athlete.name}}</LinkTo>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
 {{/if}}
