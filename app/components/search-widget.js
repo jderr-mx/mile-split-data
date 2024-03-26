@@ -31,6 +31,11 @@ export default class SearchWidgetComponent extends Component {
     this.searchTerm = searchTerm;
   }
 
+  @action
+  clickOutside() {
+    this.results = [];
+    this.searchTerm = '';
+  }
   get athleteSelected() {
     if (this.selected == 'Athlete') return 'bg-indigo-500 text-indigo-50';
     return '';

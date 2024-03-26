@@ -1,14 +1,20 @@
 import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class FavoriteAthletesComponent extends Component {
   @service dataService;
 
-  get favoriteAthletes() {
-    return this.dataService.favorites;
-  }
+  @tracked
+  localFavorites = this.dataService.favorites;
 
   get hasFavoriteAthletes() {
-    return this.dataService.favorites.length > 0;
+    return this.localFavorites.length > 0;
+  }
+
+  @action
+  favoriteAthlete(athlete) {
+    this.dataService.setFavorite(athlete);
   }
 }
