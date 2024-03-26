@@ -12,4 +12,3 @@ export default class FavoriteButtonComponent extends Component {
     this.args.clickHandler();
   }
 }
-

@@ -2,14 +2,14 @@
   <div class="rounded-xl border shadow-xl mt-16">
     {{#each this.localFavorites as |athlete|}}
       <div class="p-4 border-b flex justify-between">
-        <div class="grow">
-          <LinkTo
-            @route="athlete.summary"
-            @model={{athlete.id}}
-          >{{athlete.name}}</LinkTo>
-        </div>
+        <LinkTo @route="athlete.summary" @model={{athlete.id}} class="grow">
+          {{athlete.name}}
+        </LinkTo>
         <div class="flex-none">
-          <FavoriteButton @clickHandler={{(fn this.favoriteAthlete athlete)}} @isFavorite={{true}} />
+          <FavoriteButton
+            @clickHandler={{(fn this.favoriteAthlete athlete)}}
+            @isFavorite={{true}}
+          />
         </div>
       </div>
     {{/each}}
