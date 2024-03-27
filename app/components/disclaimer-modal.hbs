@@ -1,0 +1,25 @@
+{{#if this.show}}
+  <div
+    class="w-full h-full absolute bg-gray-100 z-10 rounded-xl shadow-xl border top-4 font-mono"
+  >
+    <div class="p-4 h-full relative flex justify-center">
+      <div>
+        <p class="mb-4">
+          All Athlete Data displayed in this app is supplied by Milesplit
+          through public APIs
+        </p>
+
+        <p class="mb-4">
+          This app is in no way created, run, afiliated with Milesplit in anyway
+        </p>
+        <p>Email john.derr@maximos.io for questions</p>
+      </div>
+    </div>
+    <div class="flex justify-center absolute bottom-0 w-full p-4">
+      <button type="button"
+        {{on "click" this.dismissModal}}
+        class="shadow-xl px-4 py-2 rounded-xl bg-indigo-500"
+      >Dismiss</button>
+    </div>
+  </div>
+{{/if}}
