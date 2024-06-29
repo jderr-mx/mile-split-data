@@ -8,12 +8,12 @@ export default class EventProgressionComponent extends Component {
     return Plot.plot({
       marginLeft: 60,
       marks: [
-        Plot.lineY(this.unitValues, {
+        Plot.lineY(this.progressionData, {
           curve: 'catmull-rom',
           marker: 'circle',
           x: Plot.indexOf,
+          y: 'units',
         }),
-        // Plot.tip(this.progressionData, { y: 'meetName', x: Plot.indexOf }),
         Plot.circle(this.prArray, {
           x: Plot.indexOf,
           y: 'units',
@@ -37,7 +37,8 @@ export default class EventProgressionComponent extends Component {
         tickSize: 0,
         grid: true,
         reverse: this.isTimedEvent,
-        label: ''
+        label: '',
+        labelArrow: 'none',
       },
     });
   }
@@ -49,9 +50,11 @@ export default class EventProgressionComponent extends Component {
   }
 
   get domain() {
-    const domainMod = this.isTimedEvent ? 100 : 1200;
-    const min = Math.min(...this.unitValues) - domainMod;
-    const max = Math.max(...this.unitValues) + domainMod;
+    const domainModPct = .015;
+    let min = Math.min(...this.unitValues);
+    min = min - min * domainModPct;
+    let max = Math.max(...this.unitValues);
+    max = max + max * domainModPct;
     return [Math.floor(min / 100) * 100, Math.ceil(max / 100) * 100];
   }
 

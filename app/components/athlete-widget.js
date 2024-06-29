@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task, timeout, restartableTask, all } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import { A } from '@ember/array';
 
 export default class AthleteWidgetComponent extends Component {
   @service dataService;
@@ -32,6 +33,14 @@ export default class AthleteWidgetComponent extends Component {
   }
 
   getMeets = restartableTask(async () => {
+    // TODO replace meet data with this data
+    const eventSeasonArray = A(
+      this.args.athlete.stats.map(({ eventCode, season }) => ({
+        eventCode,
+        season,
+      })),
+    ).uniqBy(({ eventCode, season }) => `${eventCode}-${season}`);
+
     const meetIds = [
       ...new Set(this.args.athlete.stats.map((event) => event.meetId)),
     ];
