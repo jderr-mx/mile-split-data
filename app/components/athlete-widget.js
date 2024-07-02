@@ -14,6 +14,7 @@ export default class AthleteWidgetComponent extends Component {
   constructor() {
     super(...arguments);
     this.eventCode = this.args.athlete.events[0];
+    this.athleteId = this.args.athlete.id;
     this.getMeets.perform();
   }
 
@@ -23,6 +24,10 @@ export default class AthleteWidgetComponent extends Component {
   }
 
   get eventData() {
+    return this.store
+      .peekAll('performance')
+      .filter((performance) => performance.eventCode == this.eventCode);
+    /*
     return this.args.athlete.stats
       .filter((event) => event.eventCode == this.eventCode)
       .map((event) => {
@@ -30,10 +35,10 @@ export default class AthleteWidgetComponent extends Component {
         event['date'] = meet.dateStart;
         return event;
       });
+    */
   }
 
   getMeets = restartableTask(async () => {
-    // TODO replace meet data with this data
     const eventSeasonArray = A(
       this.args.athlete.stats.map(({ eventCode, season }) => ({
         eventCode,
@@ -41,6 +46,14 @@ export default class AthleteWidgetComponent extends Component {
       })),
     ).uniqBy(({ eventCode, season }) => `${eventCode}-${season}`);
 
+    const performanceTasks = eventSeasonArray.map(
+      async ({ eventCode, season }) => {
+        await this.getPerformances.perform(this.athleteId, season, eventCode);
+      },
+    );
+    await all(performanceTasks);
+
+    /*
     const meetIds = [
       ...new Set(this.args.athlete.stats.map((event) => event.meetId)),
     ];
@@ -49,10 +62,24 @@ export default class AthleteWidgetComponent extends Component {
       this.meets.push(meet);
     });
     this.meets = await all(meetTasks);
+    */
   });
 
   getMeet = task({ maxConcurrency: 5, enqueue: true }, async (meetId) => {
     await timeout(200);
     return await this.store.findRecord('meet', meetId);
   });
+
+  getPerformances = task(
+    { maxConcurrency: 5, enqueue: true },
+    async (athleteId, season, eventCode) => {
+      await timeout(200);
+      return await this.store.query('performance', {
+        season: season,
+        event: eventCode,
+        m: 'GET',
+        id: athleteId,
+      });
+    },
+  );
 }

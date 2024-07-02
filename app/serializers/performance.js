@@ -1,19 +1,6 @@
 import ApplicationSerializer from './application';
 
 export default class PerformanceSerializer extends ApplicationSerializer {
-  /*
-  normalizeQueryResponse(store, primaryModelClass, payload, id, requestType) {
-
-    console.log('normalizeQueryResponse');
-    return super.normalizeQueryResponse(
-      store,
-      primaryModelClass,
-      payload,
-      id,
-      requestType,
-    );
-  }
-  */
   normalizeResponse(store, primaryModelClass, payload, id, requestType) {
     const {
       data: { performances },
@@ -22,6 +9,7 @@ export default class PerformanceSerializer extends ApplicationSerializer {
       (acc, item) => {
         const attributes = {};
         attributes['event-name'] = item.eventName;
+        attributes['event-code'] = item.eventCode.toUpperCase();
         attributes['meet-name'] = item.meetName;
         attributes['meet-start-date'] = item.meetStartDate;
         attributes['meet-end-date'] = item.meetEndDate;
@@ -29,6 +17,8 @@ export default class PerformanceSerializer extends ApplicationSerializer {
         attributes['season-year'] = item.seasonYear;
         attributes['mark'] = item.mark;
         attributes['units'] = item.units;
+        attributes['meet-id'] = item.meetId;
+        attributes['date'] = item.meetStartDate;
         acc.data.push({ id: item.id, type: 'performance', attributes });
         return acc;
       },

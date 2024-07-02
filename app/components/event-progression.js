@@ -8,7 +8,7 @@ export default class EventProgressionComponent extends Component {
     return Plot.plot({
       marginLeft: 60,
       marks: [
-        Plot.lineY(this.progressionData, {
+        Plot.lineY(this.eventData, {
           curve: 'catmull-rom',
           marker: 'circle',
           x: Plot.indexOf,
@@ -45,9 +45,11 @@ export default class EventProgressionComponent extends Component {
   get eventData() {
     return this.args.eventData;
   }
+  /*
   get progressionData() {
     return this.eventData.toReversed();
   }
+  */
 
   get domain() {
     const domainModPct = .015;
@@ -59,7 +61,7 @@ export default class EventProgressionComponent extends Component {
   }
 
   get unitValues() {
-    return this.progressionData.map((item) => item.units);
+    return this.eventData.map((item) => item.units);
   }
 
   get prArray() {
