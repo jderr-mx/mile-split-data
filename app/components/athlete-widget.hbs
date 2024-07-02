@@ -4,14 +4,14 @@
   </div>
 {{else}}
   <div class="flex flex-col justify-center lg:flex-row p-4">
-    <div class="basis-1/2 p-4 h-full">
+    <div class="basis-1/2 p-4 h-full max-w-screen-sm">
       <AthleteSummary
         @athlete={{@athlete}}
         @setEventCode={{this.setEventCode}}
         @selectedEvent={{this.eventCode}}
       />
     </div>
-    <div class="basis-1/2 p-4 h-full">
+    <div class="basis-1/2 p-4 h-full max-w-screen-sm">
       <EventProgression
         @eventData={{this.eventData}}
         @eventCode={{this.eventCode}}
@@ -19,7 +19,7 @@
       />
       <div class="flex">
         <div class="border w-full rounded-lg shadow-lg overflow-auto">
-          {{#each this.eventData as |event|}}
+          {{#each this.sortedEventData as |event|}}
             <div
               class="flex justify-between items-center text-sm border-b p-4 last-of-type:border-0"
             >{{event.name}}

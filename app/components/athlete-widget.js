@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task, timeout, restartableTask, all } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import { A } from '@ember/array';
 
 export default class AthleteWidgetComponent extends Component {
   @service dataService;
@@ -13,6 +14,7 @@ export default class AthleteWidgetComponent extends Component {
   constructor() {
     super(...arguments);
     this.eventCode = this.args.athlete.events[0];
+    this.athleteId = this.args.athlete.id;
     this.getMeets.perform();
   }
 
@@ -22,28 +24,49 @@ export default class AthleteWidgetComponent extends Component {
   }
 
   get eventData() {
-    return this.args.athlete.stats
-      .filter((event) => event.eventCode == this.eventCode)
-      .map((event) => {
-        const meet = this.store.peekRecord('meet', event.meetId);
-        event['date'] = meet.dateStart;
-        return event;
+    return this.store
+      .peekAll('performance')
+      .filter(
+        (performance) =>
+          performance.eventCode == this.eventCode &&
+          performance.athleteId == this.athleteId,
+      ).sort((a, b) => {
+        return Date.parse(a.date) - Date.parse(b.date);
       });
   }
 
-  getMeets = restartableTask(async () => {
-    const meetIds = [
-      ...new Set(this.args.athlete.stats.map((event) => event.meetId)),
-    ];
-    const meetTasks = meetIds.map(async (id) => {
-      const meet = await this.getMeet.perform(id);
-      this.meets.push(meet);
+  get sortedEventData() {
+    return this.eventData.sort((a, b) => {
+      return Date.parse(b.date) - Date.parse(a.date);
     });
-    this.meets = await all(meetTasks);
+  }
+
+  getMeets = restartableTask(async () => {
+    const eventSeasonArray = A(
+      this.args.athlete.stats.map(({ eventCode, season }) => ({
+        eventCode,
+        season,
+      })),
+    ).uniqBy(({ eventCode, season }) => `${eventCode}-${season}`);
+
+    const performanceTasks = eventSeasonArray.map(
+      async ({ eventCode, season }) => {
+        await this.getPerformances.perform(this.athleteId, season, eventCode);
+      },
+    );
+    await all(performanceTasks);
   });
 
-  getMeet = task({ maxConcurrency: 5, enqueue: true }, async (meetId) => {
-    await timeout(200);
-    return await this.store.findRecord('meet', meetId);
-  });
+  getPerformances = task(
+    { maxConcurrency: 5, enqueue: true },
+    async (athleteId, season, eventCode) => {
+      await timeout(200);
+      return await this.store.query('performance', {
+        season: season,
+        event: eventCode,
+        m: 'GET',
+        id: athleteId,
+      });
+    },
+  );
 }
