@@ -26,16 +26,19 @@ export default class AthleteWidgetComponent extends Component {
   get eventData() {
     return this.store
       .peekAll('performance')
-      .filter((performance) => performance.eventCode == this.eventCode);
-    /*
-    return this.args.athlete.stats
-      .filter((event) => event.eventCode == this.eventCode)
-      .map((event) => {
-        const meet = this.store.peekRecord('meet', event.meetId);
-        event['date'] = meet.dateStart;
-        return event;
+      .filter(
+        (performance) =>
+          performance.eventCode == this.eventCode &&
+          performance.athleteId == this.athleteId,
+      ).sort((a, b) => {
+        return Date.parse(a.date) - Date.parse(b.date);
       });
-    */
+  }
+
+  get sortedEventData() {
+    return this.eventData.sort((a, b) => {
+      return Date.parse(b.date) - Date.parse(a.date);
+    });
   }
 
   getMeets = restartableTask(async () => {
@@ -52,22 +55,6 @@ export default class AthleteWidgetComponent extends Component {
       },
     );
     await all(performanceTasks);
-
-    /*
-    const meetIds = [
-      ...new Set(this.args.athlete.stats.map((event) => event.meetId)),
-    ];
-    const meetTasks = meetIds.map(async (id) => {
-      const meet = await this.getMeet.perform(id);
-      this.meets.push(meet);
-    });
-    this.meets = await all(meetTasks);
-    */
-  });
-
-  getMeet = task({ maxConcurrency: 5, enqueue: true }, async (meetId) => {
-    await timeout(200);
-    return await this.store.findRecord('meet', meetId);
   });
 
   getPerformances = task(

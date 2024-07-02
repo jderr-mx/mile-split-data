@@ -8,6 +8,7 @@ export default class PerformanceSerializer extends ApplicationSerializer {
     const newPayload = performances.reduce(
       (acc, item) => {
         const attributes = {};
+        attributes['athlete-id'] = item.athleteId;
         attributes['event-name'] = item.eventName;
         attributes['event-code'] = item.eventCode.toUpperCase();
         attributes['meet-name'] = item.meetName;
