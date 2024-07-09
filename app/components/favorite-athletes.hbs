@@ -1,8 +1,8 @@
 {{#if this.hasFavoriteAthletes}}
   <div class="rounded-xl border shadow-xl mt-16">
     {{#each this.localFavorites as |athlete|}}
-      <div class="p-4 border-b flex justify-between">
-        <LinkTo @route="athlete.summary" @model={{athlete.id}} class="grow">
+      <div class="p-4 border-b flex justify-between items-center">
+        <LinkTo @route="athlete.summary" @model={{athlete.id}} class="grow text-gray-500 hover:text-gray-700">
           {{athlete.name}}
         </LinkTo>
         <div class="flex-none">
